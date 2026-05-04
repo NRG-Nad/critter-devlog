@@ -1,0 +1,9 @@
+---
+import { AUTHOR, GITHUB_URL } from '../consts';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div>
+    &copy; {year} {AUTHOR} &middot; <a href={GITHUB_URL}>Critter on GitHub</a>
+  </div>
+</footer>
