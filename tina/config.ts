@@ -20,6 +20,9 @@ export default defineConfig({
   build: {
     outputFolder: 'admin',
     publicFolder: 'public',
+    // GitHub Pages serves the site at /critter-devlog/ — Tina's admin SPA
+    // needs to know that prefix or its asset URLs 404.
+    basePath: 'critter-devlog',
   },
 
   media: {
