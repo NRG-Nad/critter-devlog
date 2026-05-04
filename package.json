@@ -4,16 +4,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "tinacms dev -c \"astro dev\"",
+    "dev:astro": "astro dev",
+    "start": "tinacms dev -c \"astro dev\"",
+    "build": "tinacms build && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "tina:dev": "tinacms dev",
+    "tina:build": "tinacms build"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.0",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.4.0",
-    "astro": "^5.13.0"
+    "astro": "^5.13.0",
+    "tinacms": "^2.7.0"
+  },
+  "devDependencies": {
+    "@tinacms/cli": "^1.9.0"
   }
 }

@@ -2,6 +2,10 @@
 dist/
 .astro/
 
+# tina
+tina/__generated__/
+public/admin/
+
 # dependencies
 node_modules/
 
