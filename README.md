@@ -33,7 +33,7 @@ The deployed site has a `/admin` route powered by [TinaCMS](https://tina.io). Si
 
 ## Authoring workflow
 
-- **Draft from git** — invoke `/devlog-draft 2026 5` in Claude Code (engine workspace). Pulls last month's commits from `Critter/` + `Critter/Plugins/Monolith/`, writes a populated `src/content/posts/YYYY-MM-month.md` with `draft: true`.
+- **Draft from git** — invoke `/devlog-draft 2026 5` in Claude Code (engine workspace). Pulls last month's commits from `Critter/`, writes a populated `src/content/posts/YYYY-MM-month.md` with `draft: true`.
 - **Commit + push** the draft.
 - **Polish in the browser** — open `https://your-site/admin/`, find the draft, add screenshots/clips, fix prose, flip `draft: false`.
 - **Save** — Tina commits, deploy runs, post is live.
