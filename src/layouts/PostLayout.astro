@@ -4,6 +4,7 @@ import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Comments from '../components/Comments.astro';
 import { SECTIONS, type SectionKey } from '../consts';
+import { categoryMeta } from '../data/categories';
 
 interface Props {
   section: SectionKey;
@@ -14,10 +15,12 @@ interface Props {
   cover?: any;
   coverAlt?: string;
   tags?: string[];
+  category?: string;
 }
 
-const { section, title, description, pubDate, updatedDate, cover, coverAlt, tags = [] } = Astro.props;
+const { section, title, description, pubDate, updatedDate, cover, coverAlt, tags = [], category } = Astro.props;
 const meta = SECTIONS[section];
+const cat = category ? categoryMeta(category) : null;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <BaseLayout title={title} description={description} accent={meta.accent}>
@@ -25,7 +28,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     {cover && <Image class="post-cover" src={cover} alt={coverAlt ?? title} width={1200} height={675} />}
     <header class="post-header">
       <div class="post-meta">
-        <span class="badge">{meta.label}</span>
+        {cat ? (
+          <span class="badge badge--cat" style={`--cat-color:${cat.color}`}>{cat.glyph} {cat.label}</span>
+        ) : (
+          <span class="badge">{meta.label}</span>
+        )}
         <FormattedDate date={pubDate} />
         {updatedDate && <span>· updated <FormattedDate date={updatedDate} /></span>}
       </div>

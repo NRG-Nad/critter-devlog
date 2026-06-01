@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import FormattedDate from './FormattedDate.astro';
 import { SECTIONS, type SectionKey } from '../consts';
+import { categoryMeta } from '../data/categories';
 
 interface Props {
   href: string;
@@ -13,18 +14,26 @@ interface Props {
   coverAlt?: string;
   tags?: string[];
   difficulty?: string;
+  /** Devlog category id — shown as a colored badge instead of the section badge. */
+  category?: string;
   feature?: boolean;
+  milestone?: boolean;
 }
 
 const {
   href, section, title, description, pubDate,
-  cover, coverAlt, tags = [], difficulty, feature = false,
+  cover, coverAlt, tags = [], difficulty, category,
+  feature = false, milestone = false,
 } = Astro.props;
 
 const meta = SECTIONS[section];
+const cat = category ? categoryMeta(category) : null;
 const initial = title.trim().charAt(0).toUpperCase();
+const classes = ['card', (feature || milestone) && 'card-feature', milestone && 'card--milestone']
+  .filter(Boolean)
+  .join(' ');
 ---
-<a class={`card${feature ? ' card-feature' : ''}`} href={href} data-accent={meta.accent}>
+<a class={classes} href={href} data-accent={meta.accent}>
   {cover ? (
     <Image class="card-cover" src={cover} alt={coverAlt ?? title} width={800} height={450} />
   ) : (
@@ -32,7 +41,11 @@ const initial = title.trim().charAt(0).toUpperCase();
   )}
   <div class="card-body">
     <div class="card-meta">
-      <span class="badge">{meta.label}</span>
+      {cat ? (
+        <span class="badge badge--cat" style={`--cat-color:${cat.color}`}>{cat.glyph} {cat.label}</span>
+      ) : (
+        <span class="badge">{meta.label}</span>
+      )}
       <FormattedDate date={pubDate} />
       {difficulty && <span class={`diff ${difficulty}`}>{difficulty}</span>}
     </div>

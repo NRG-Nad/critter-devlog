@@ -1,4 +1,8 @@
 import { defineCollection, z } from 'astro:content';
+import { CATEGORIES } from '../data/categories';
+
+// Category enum derived from the taxonomy — single source of truth in data/categories.ts.
+const categoryIds = Object.keys(CATEGORIES) as [string, ...string[]];
 
 // Shared frontmatter across every content type.
 const base = ({ image }: { image: () => any }) => ({
@@ -13,10 +17,15 @@ const base = ({ image }: { image: () => any }) => ({
   featured: z.boolean().default(false),
 });
 
-// Monthly progress updates. Chronological, changelog-flavored.
+// Devlog posts. `category` is the primary, filterable taxonomy (see data/categories.ts);
+// `tags` carry secondary topics. Defaults to a progress update — the recurring backbone.
 const devlog = defineCollection({
   type: 'content',
-  schema: ({ image }) => z.object({ ...base({ image }) }),
+  schema: ({ image }) =>
+    z.object({
+      ...base({ image }),
+      category: z.enum(categoryIds).default('progress-update'),
+    }),
 });
 
 // Evergreen technical deep-dives for the dev community. Support grouping into a

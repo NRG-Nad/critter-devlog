@@ -34,8 +34,8 @@ export default defineConfig({
 
   schema: {
     collections: [
-      buildCollection('devlog', 'Devlog', 'src/content/devlog'),
-      buildCollection('tutorials', 'Tutorials', 'src/content/tutorials', true),
+      buildCollection('devlog', 'Devlog', 'src/content/devlog', { category: true }),
+      buildCollection('tutorials', 'Tutorials', 'src/content/tutorials', { tutorial: true }),
       {
         name: 'roadmap',
         label: 'Roadmap',
@@ -70,9 +70,11 @@ export default defineConfig({
   },
 });
 
-// Shared collection factory. `withTutorialFields` adds the tutorial-only metadata
-// (difficulty, engine version, series, prerequisites) on top of the common fields.
-function buildCollection(name, label, path, withTutorialFields = false) {
+// Shared collection factory. Options:
+//   tutorial — adds difficulty / engine version / series / prerequisites
+//   category — adds the devlog category dropdown (the primary tag)
+function buildCollection(name, label, path, opts = {}) {
+  const { tutorial = false, category = false } = opts;
   const slugify = (values) => {
     const title = (values?.title as string) || 'untitled';
     return title
@@ -116,6 +118,24 @@ function buildCollection(name, label, path, withTutorialFields = false) {
     },
   ];
 
+  const categoryField = {
+    type: 'string',
+    name: 'category',
+    label: 'Category',
+    description: 'The primary tag — drives filtering and card color. Exactly one.',
+    options: [
+      { value: 'progress-update', label: '📊 Progress Update' },
+      { value: 'feature-spotlight', label: '✨ Feature Spotlight' },
+      { value: 'technical-breakdown', label: '⚙️ Technical Breakdown' },
+      { value: 'art-audio', label: '🎨 Art & Audio' },
+      { value: 'design-decision', label: '🧭 Design Decision' },
+      { value: 'postmortem', label: '🔍 Postmortem' },
+      { value: 'behind-the-scenes', label: '🎬 Behind the Scenes' },
+      { value: 'milestone', label: '🚩 Milestone' },
+      { value: 'community', label: '💬 Community' },
+    ],
+  };
+
   const tutorialFields = [
     {
       type: 'string',
@@ -137,12 +157,11 @@ function buildCollection(name, label, path, withTutorialFields = false) {
     parser: { type: 'markdown' },
   };
 
-  return {
-    name,
-    label,
-    path,
-    format: 'md',
-    ui: { filename: { slugify } },
-    fields: withTutorialFields ? [...common, ...tutorialFields, body] : [...common, body],
-  };
+  // Compose fields: title, description, [category], pubDate…, [tutorial fields], body.
+  const fields = [...common];
+  if (category) fields.splice(2, 0, categoryField);
+  if (tutorial) fields.push(...tutorialFields);
+  fields.push(body);
+
+  return { name, label, path, format: 'md', ui: { filename: { slugify } }, fields };
 }

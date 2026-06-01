@@ -52,6 +52,13 @@ Content lives in collections under `src/content/` — `devlog/`, `tutorials/`, a
 
 Tutorials support extra frontmatter: `difficulty` (beginner/intermediate/advanced), `engineVersion`, `series` + `seriesOrder` (groups multi-part tutorials and renders a series-nav box), and `prerequisites`.
 
+### Devlog categories
+
+Every devlog post has one `category` — the primary, reader-filterable tag (defined in `src/data/categories.ts`): progress-update, feature-spotlight, technical-breakdown, art-audio, design-decision, postmortem, behind-the-scenes, milestone, community. It drives the colored badge, the filter bar on `/devlog`, and the gold banner treatment for milestones. Freeform `tags` carry secondary topics.
+
+- **Writing guide:** [`docs/writing-guide.md`](docs/writing-guide.md) — what each category is for, its structure, dos/don'ts, and the recommended mix. The `/devlog-draft` skill loads this.
+- **Templates:** [`templates/devlog/`](templates/devlog/) — one skeleton per category. `/devlog-draft <category>` scaffolds from these; or copy one by hand.
+
 The fastest way to start a new monthly **devlog** post is to invoke the `/devlog-draft` skill from Claude Code in the engine workspace — it pulls the previous month's git activity from `Critter/`, groups commits, and writes a populated draft into `src/content/devlog/`.
 
 ### Adding images

@@ -450,6 +450,24 @@ li { margin: 0.25rem 0; }
 }
 .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
+/* Category badge — colored per-category via inline --cat-color */
+.badge--cat {
+  background: color-mix(in srgb, var(--cat-color) 14%, transparent);
+  color: var(--cat-color);
+  border-color: color-mix(in srgb, var(--cat-color) 38%, transparent);
+}
+.badge--cat::before { background: var(--cat-color); }
+
+/* Milestone posts — full-width, gold-accented, share-worthy */
+.card-wrap--feature { grid-column: 1 / -1; }
+.card--milestone {
+  border-color: color-mix(in srgb, #ffcf5c 55%, var(--border));
+  background:
+    radial-gradient(130% 150% at 0% 0%, rgba(255, 207, 92, 0.12), transparent 55%),
+    var(--bg-elev);
+}
+.card--milestone:hover { border-color: #ffcf5c; box-shadow: 0 10px 32px rgba(255, 179, 64, 0.16); }
+
 .tag-pill {
   display: inline-block;
   font-size: 0.72rem;
@@ -484,6 +502,12 @@ li { margin: 0.25rem 0; }
 }
 .filterbar button:hover { color: var(--text); border-color: var(--border-bright); }
 .filterbar button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+/* Category filter chips tint to their own color when active */
+#cat-filter button[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--cat-color, var(--accent)) 16%, transparent);
+  color: var(--cat-color, var(--accent));
+  border-color: var(--cat-color, var(--accent));
+}
 
 /* Series grouping */
 .series-group { margin-bottom: 2.5rem; }
