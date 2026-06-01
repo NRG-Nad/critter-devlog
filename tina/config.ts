@@ -163,5 +163,23 @@ function buildCollection(name, label, path, opts = {}) {
   if (tutorial) fields.push(...tutorialFields);
   fields.push(body);
 
-  return { name, label, path, format: 'md', ui: { filename: { slugify } }, fields };
+  // Defaults applied when you click "Create New" in the Tina admin — so a new
+  // post opens pre-filled (draft, today's date, a starter category + body skeleton)
+  // instead of blank. Per-category skeletons live in /templates and the
+  // /devlog-draft skill; this covers the common case in-browser.
+  const today = () => new Date().toISOString().slice(0, 10);
+  let defaultItem;
+  if (category) {
+    defaultItem = () => ({
+      draft: true,
+      pubDate: today(),
+      category: 'progress-update',
+      body: "\n## Headlines\n\n- \n\n## Blockers\n\n- \n\n## What's next\n\n- \n",
+    });
+  } else if (tutorial) {
+    defaultItem = () => ({ draft: true, pubDate: today(), difficulty: 'intermediate' });
+  }
+
+  const ui = defaultItem ? { filename: { slugify }, defaultItem } : { filename: { slugify } };
+  return { name, label, path, format: 'md', ui, fields };
 }
