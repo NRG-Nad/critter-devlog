@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import FormattedDate from './FormattedDate.astro';
+import { SECTIONS, type SectionKey } from '../consts';
+
+interface Props {
+  href: string;
+  section: SectionKey;
+  title: string;
+  description: string;
+  pubDate: Date;
+  cover?: any;
+  coverAlt?: string;
+  tags?: string[];
+  difficulty?: string;
+  feature?: boolean;
+}
+
+const {
+  href, section, title, description, pubDate,
+  cover, coverAlt, tags = [], difficulty, feature = false,
+} = Astro.props;
+
+const meta = SECTIONS[section];
+const initial = title.trim().charAt(0).toUpperCase();
+---
+<a class={`card${feature ? ' card-feature' : ''}`} href={href} data-accent={meta.accent}>
+  {cover ? (
+    <Image class="card-cover" src={cover} alt={coverAlt ?? title} width={800} height={450} />
+  ) : (
+    <div class="card-cover placeholder" aria-hidden="true"><span class="ph-mark">{initial}</span></div>
+  )}
+  <div class="card-body">
+    <div class="card-meta">
+      <span class="badge">{meta.label}</span>
+      <FormattedDate date={pubDate} />
+      {difficulty && <span class={`diff ${difficulty}`}>{difficulty}</span>}
+    </div>
+    <h3 class="card-title">{title}</h3>
+    <p class="card-desc">{description}</p>
+    <span class="card-spacer"></span>
+    {tags.length > 0 && (
+      <div class="post-tags">
+        {tags.slice(0, 3).map((t) => <span class="tag-pill">{t}</span>)}
+      </div>
+    )}
+  </div>
+</a>

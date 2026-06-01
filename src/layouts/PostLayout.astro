@@ -1,29 +1,44 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import Comments from '../components/Comments.astro';
+import { SECTIONS, type SectionKey } from '../consts';
 
-type Props = CollectionEntry<'posts'>['data'];
+interface Props {
+  section: SectionKey;
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  cover?: any;
+  coverAlt?: string;
+  tags?: string[];
+}
 
-const { title, description, pubDate, tags } = Astro.props;
+const { section, title, description, pubDate, updatedDate, cover, coverAlt, tags = [] } = Astro.props;
+const meta = SECTIONS[section];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} accent={meta.accent}>
   <article>
+    {cover && <Image class="post-cover" src={cover} alt={coverAlt ?? title} width={1200} height={675} />}
     <header class="post-header">
       <div class="post-meta">
+        <span class="badge">{meta.label}</span>
         <FormattedDate date={pubDate} />
+        {updatedDate && <span>· updated <FormattedDate date={updatedDate} /></span>}
       </div>
       <h1 class="post-title">{title}</h1>
       <p class="post-description">{description}</p>
       {tags.length > 0 && (
-        <div class="post-tags">
-          {tags.map((t) => <span class="tag-pill">{t}</span>)}
-        </div>
+        <div class="post-tags">{tags.map((t) => <span class="tag-pill">{t}</span>)}</div>
       )}
     </header>
     <slot />
     <nav class="post-nav">
-      <a href={`${import.meta.env.BASE_URL}`}>&larr; All posts</a>
+      <a href={`${base}${meta.href}`}>&larr; All {meta.label.toLowerCase()}</a>
     </nav>
+    <Comments />
   </article>
 </BaseLayout>

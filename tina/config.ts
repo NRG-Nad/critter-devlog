@@ -34,85 +34,115 @@ export default defineConfig({
 
   schema: {
     collections: [
+      buildCollection('devlog', 'Devlog', 'src/content/devlog'),
+      buildCollection('tutorials', 'Tutorials', 'src/content/tutorials', true),
       {
-        name: 'post',
-        label: 'Devlog posts',
-        path: 'src/content/posts',
+        name: 'roadmap',
+        label: 'Roadmap',
+        path: 'src/content/roadmap',
         format: 'md',
         ui: {
           filename: {
-            // Generated from title: "May 2026 — Devlog kickoff" → "may-2026-devlog-kickoff"
-            // You can override before saving a brand-new post.
-            slugify: (values) => {
-              const title = (values?.title as string) || 'untitled';
-              return title
+            slugify: (values) =>
+              ((values?.title as string) || 'feature')
                 .toLowerCase()
                 .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-            },
+                .replace(/^-+|-+$/g, ''),
           },
         },
         fields: [
+          { type: 'string', name: 'title', label: 'Feature', isTitle: true, required: true },
           {
             type: 'string',
-            name: 'title',
-            label: 'Title',
-            isTitle: true,
+            name: 'status',
+            label: 'Status',
+            options: ['planned', 'in-progress', 'shipped'],
             required: true,
           },
-          {
-            type: 'string',
-            name: 'description',
-            label: 'Description',
-            description: 'One sentence — shown on the index page and in the RSS feed.',
-            required: true,
-            ui: { component: 'textarea' },
-          },
-          {
-            type: 'datetime',
-            name: 'pubDate',
-            label: 'Publish date',
-            required: true,
-            ui: {
-              dateFormat: 'YYYY-MM-DD',
-            },
-          },
-          {
-            type: 'image',
-            name: 'cover',
-            label: 'Cover image',
-          },
-          {
-            type: 'string',
-            name: 'coverAlt',
-            label: 'Cover alt text',
-          },
-          {
-            type: 'string',
-            name: 'tags',
-            label: 'Tags',
-            list: true,
-            ui: {
-              component: 'tags',
-            },
-          },
-          {
-            type: 'boolean',
-            name: 'draft',
-            label: 'Draft',
-            description:
-              'Drafts are excluded from the public index, post pages, and RSS feed.',
-          },
-          {
-            type: 'rich-text',
-            name: 'body',
-            label: 'Body',
-            isBody: true,
-            // Store as plain Markdown so files stay readable + diffable in git.
-            parser: { type: 'markdown' },
-          },
+          { type: 'string', name: 'area', label: 'Area', description: 'e.g. Climbing, Progression, Online', required: true },
+          { type: 'datetime', name: 'date', label: 'Date', description: 'Shipped date, or target.', ui: { dateFormat: 'YYYY-MM-DD' } },
+          { type: 'number', name: 'order', label: 'Sort order (lower = first)' },
+          { type: 'boolean', name: 'draft', label: 'Draft' },
+          { type: 'rich-text', name: 'body', label: 'Description', isBody: true, parser: { type: 'markdown' } },
         ],
       },
     ],
   },
 });
+
+// Shared collection factory. `withTutorialFields` adds the tutorial-only metadata
+// (difficulty, engine version, series, prerequisites) on top of the common fields.
+function buildCollection(name, label, path, withTutorialFields = false) {
+  const slugify = (values) => {
+    const title = (values?.title as string) || 'untitled';
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
+
+  const common = [
+    { type: 'string', name: 'title', label: 'Title', isTitle: true, required: true },
+    {
+      type: 'string',
+      name: 'description',
+      label: 'Description',
+      description: 'One sentence — shown on cards and in the RSS feed.',
+      required: true,
+      ui: { component: 'textarea' },
+    },
+    {
+      type: 'datetime',
+      name: 'pubDate',
+      label: 'Publish date',
+      required: true,
+      ui: { dateFormat: 'YYYY-MM-DD' },
+    },
+    { type: 'datetime', name: 'updatedDate', label: 'Last updated', ui: { dateFormat: 'YYYY-MM-DD' } },
+    { type: 'image', name: 'cover', label: 'Cover image' },
+    { type: 'string', name: 'coverAlt', label: 'Cover alt text' },
+    { type: 'string', name: 'tags', label: 'Tags', list: true, ui: { component: 'tags' } },
+    {
+      type: 'boolean',
+      name: 'featured',
+      label: 'Featured',
+      description: 'Surface this post more prominently on the landing page.',
+    },
+    {
+      type: 'boolean',
+      name: 'draft',
+      label: 'Draft',
+      description: 'Drafts are excluded from the public index, post pages, and RSS feed.',
+    },
+  ];
+
+  const tutorialFields = [
+    {
+      type: 'string',
+      name: 'difficulty',
+      label: 'Difficulty',
+      options: ['beginner', 'intermediate', 'advanced'],
+    },
+    { type: 'string', name: 'engineVersion', label: 'Engine version', description: 'e.g. "UE 5.7"' },
+    { type: 'string', name: 'series', label: 'Series name', description: 'Group multi-part tutorials together.' },
+    { type: 'number', name: 'seriesOrder', label: 'Order within series' },
+    { type: 'string', name: 'prerequisites', label: 'Prerequisites', list: true },
+  ];
+
+  const body = {
+    type: 'rich-text',
+    name: 'body',
+    label: 'Body',
+    isBody: true,
+    parser: { type: 'markdown' },
+  };
+
+  return {
+    name,
+    label,
+    path,
+    format: 'md',
+    ui: { filename: { slugify } },
+    fields: withTutorialFields ? [...common, ...tutorialFields, body] : [...common, body],
+  };
+}

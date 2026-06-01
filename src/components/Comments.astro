@@ -1,0 +1,29 @@
+---
+import { GISCUS } from '../consts';
+// Comments only render once giscus is configured in consts.ts. Until then this
+// component emits nothing — no broken widget, no empty section.
+const enabled = Boolean(GISCUS.repo && GISCUS.repoId);
+---
+{enabled && (
+  <section class="comments">
+    <h2>Comments</h2>
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={GISCUS.repo}
+      data-repo-id={GISCUS.repoId}
+      data-category={GISCUS.category}
+      data-category-id={GISCUS.categoryId}
+      data-mapping="pathname"
+      data-strict="1"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme={GISCUS.theme}
+      data-lang="en"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async
+    ></script>
+  </section>
+)}

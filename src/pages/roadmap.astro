@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const all = await getCollection('roadmap', ({ data }) => !data.draft);
+const rendered = await Promise.all(
+  all.map(async (item) => ({ data: item.data, Content: (await item.render()).Content })),
+);
+
+// Status groups, in display order.
+const GROUPS = [
+  { key: 'shipped', label: 'Shipped' },
+  { key: 'in-progress', label: 'In progress' },
+  { key: 'planned', label: 'Planned' },
+] as const;
+
+const inGroup = (key: string) =>
+  rendered
+    .filter((r) => r.data.status === key)
+    .sort(
+      (a, b) =>
+        a.data.order - b.data.order ||
+        (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0),
+    );
+
+const total = rendered.length;
+const shipped = rendered.filter((r) => r.data.status === 'shipped').length;
+const pct = total ? Math.round((shipped / total) * 100) : 0;
+---
+<BaseLayout title="Roadmap" variant="wide" accent="biome">
+  <h1>Roadmap</h1>
+  <p class="tagline">The core features that make up Critter, and where each one stands.</p>
+
+  {total > 0 && (
+    <div class="roadmap-summary">
+      <span class="progress-label">{shipped} of {total} shipped</span>
+      <div class="progress-track"><div class="progress-fill" style={`width:${pct}%`}></div></div>
+      <span class="progress-label">{pct}%</span>
+    </div>
+  )}
+
+  {total === 0 ? (
+    <p class="lead">The roadmap is being filled in — check back soon.</p>
+  ) : (
+    GROUPS.map((g) => {
+      const items = inGroup(g.key);
+      if (items.length === 0) return null;
+      return (
+        <section class={`roadmap-group status-${g.key}`}>
+          <h2 class="roadmap-group-head">
+            <span class="status-dot"></span>{g.label}
+            <span class="count">{items.length}</span>
+          </h2>
+          {items.map(({ data, Content }) => (
+            <div class="roadmap-item">
+              <div class="ri-side">
+                <span class="ri-area">{data.area}</span>
+                {data.date && <span class="ri-date"><FormattedDate date={data.date} /></span>}
+              </div>
+              <div>
+                <h3 class="ri-title">{data.title}</h3>
+                <div class="ri-body"><Content /></div>
+              </div>
+            </div>
+          ))}
+        </section>
+      );
+    })
+  )}
+</BaseLayout>

@@ -6,17 +6,22 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  /** 'default' = reading column, 'wide' = wide grid, 'flush' = full-bleed (landing) */
+  variant?: 'default' | 'wide' | 'flush';
+  /** Section accent applied to the whole page (drives --accent CSS var) */
+  accent?: 'rift' | 'biome' | 'shard';
 }
 
-const { title, description } = Astro.props;
+const { title, description, variant = 'default', accent } = Astro.props;
+const mainClass = variant === 'wide' ? 'wide' : variant === 'flush' ? 'flush' : undefined;
 ---
-<html lang="en">
+<html lang="en" data-accent={accent}>
   <head>
     <BaseHead title={title} description={description} />
   </head>
   <body>
     <Header />
-    <main>
+    <main class={mainClass}>
       <slot />
     </main>
     <Footer />

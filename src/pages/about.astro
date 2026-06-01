@@ -1,22 +1,66 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { DISCORD_URL } from '../consts';
+
+const faqs = [
+  {
+    q: 'What is Critter?',
+    a: 'A co-op multiplayer climbing exploration game built on Unreal Engine 5 and the Lyra sample project. A small group climbs, scavenges, and survives across a stitched-together set of biomes — collecting Rift Shards, completing missions, and unlocking new regions.',
+  },
+  {
+    q: 'When can I play it?',
+    a: "There's no release date yet. The roadmap page tracks what's shipped and what's still in progress — that's the most honest answer to \"how far along is it.\"",
+  },
+  {
+    q: 'How many players is it built for?',
+    a: 'It\'s designed for small co-op groups and is multiplayer-first — built on Lyra with online services via EOS, so it runs in standalone, listen-server, and dedicated-server setups.',
+  },
+  {
+    q: 'Is it solo-developed?',
+    a: 'Yes. Critter is built by one person, which is part of why the devlog leans on automation — monthly posts are drafted straight from the commit history, then hand-edited.',
+  },
+  {
+    q: 'Can I follow development?',
+    a: 'The devlog drops monthly, tutorials whenever something is worth sharing, and the Discord is the place for day-to-day chatter and playtest news.',
+  },
+];
 ---
 <BaseLayout title="About">
-  <h1>About</h1>
+  <h1>About Critter</h1>
   <p>
     <strong>Critter</strong> is a co-op multiplayer climbing exploration game built on
     Unreal Engine 5 and the Lyra sample project. You and a small group climb, scavenge,
     and survive across a stitched-together set of biomes — finding Rift Shards, completing
     missions, and unlocking new regions as you go.
   </p>
+
+  <h2>What you'll find here</h2>
+  <ul>
+    <li><strong>Devlog</strong> — one post a month covering what shipped, what broke, and what's next. Generated from the actual git history, so the changelog is real, not aspirational.</li>
+    <li><strong>Tutorials</strong> — deep dives on how the game is built: extending Lyra's systems, GAS wiring, material and particle setups, and engine tech. Written for other UE developers.</li>
+    <li><strong>Roadmap</strong> — the core features that make up Critter and where each one stands.</li>
+  </ul>
+
+  <h2>Who's making it</h2>
   <p>
-    This devlog drops a single longer post each month covering what shipped, what broke,
-    and what's coming next. Posts are written from the actual git history of the project,
-    so the changelog is real, not aspirational.
+    Built solo by <a href="https://github.com/NRG-Nad">NRG-Nad</a>. The monthly devlog is
+    drafted with a Claude Code skill that reads the previous month's commits, then hand-edited
+    with screenshots and commentary.
   </p>
-  <p>
-    Built solo by <a href="https://github.com/NRG-Nad">NRG-Nad</a>. Source for the game is
-    private; source for the devlog is
-    <a href="https://github.com/NRG-Nad/critter-devlog">here</a>.
-  </p>
+
+  <h2>FAQ</h2>
+  <div class="faq">
+    {faqs.map((item) => (
+      <details>
+        <summary>{item.q}</summary>
+        <p>{item.a}</p>
+      </details>
+    ))}
+  </div>
+
+  {DISCORD_URL && (
+    <p style="margin-top:2rem">
+      Still have a question? <a href={DISCORD_URL} target="_blank" rel="noopener">Ask in the Discord</a>.
+    </p>
+  )}
 </BaseLayout>

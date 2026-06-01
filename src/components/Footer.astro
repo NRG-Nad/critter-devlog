@@ -1,9 +1,22 @@
 ---
-import { AUTHOR, GITHUB_URL } from '../consts';
+import { AUTHOR, DISCORD_URL, STEAM_URL } from '../consts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const year = new Date().getFullYear();
+const links = [
+  { href: `${base}/devlog`, label: 'Devlog' },
+  { href: `${base}/tutorials`, label: 'Tutorials' },
+  { href: `${base}/roadmap`, label: 'Roadmap' },
+  DISCORD_URL && { href: DISCORD_URL, label: 'Discord', ext: true },
+  STEAM_URL && { href: STEAM_URL, label: 'Steam', ext: true },
+].filter(Boolean) as { href: string; label: string; ext?: boolean }[];
 ---
 <footer class="site-footer">
-  <div>
-    &copy; {year} {AUTHOR} &middot; <a href={GITHUB_URL}>Critter on GitHub</a>
+  <div class="footer-inner">
+    <div>&copy; {year} {AUTHOR} &middot; Built with Astro</div>
+    <nav class="footer-links">
+      {links.map((l) => (
+        <a href={l.href} {...(l.ext ? { rel: 'noopener', target: '_blank' } : {})}>{l.label}</a>
+      ))}
+    </nav>
   </div>
 </footer>

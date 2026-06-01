@@ -1,30 +1,131 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_TAGLINE } from '../consts';
+import PostCard from '../components/PostCard.astro';
+import { SITE_TAGLINE, DISCORD_URL, STEAM_URL } from '../consts';
 
-const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
----
-<BaseLayout>
-  <p class="tagline">{SITE_TAGLINE}</p>
+const byDate = (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf();
+const live = ({ data }: any) => !data.draft;
 
-  <ul class="post-list">
-    {posts.map((post) => (
-      <li>
-        <a class="post-card" href={`${base}/posts/${post.slug}/`}>
-          <div class="post-card-meta">
-            <FormattedDate date={post.data.pubDate} />
-            {post.data.tags.length > 0 && <span>&middot;</span>}
-            {post.data.tags.slice(0, 3).map((t) => <span class="tag-pill">{t}</span>)}
-          </div>
-          <h2 class="post-card-title">{post.data.title}</h2>
-          <p class="post-card-desc">{post.data.description}</p>
-        </a>
-      </li>
-    ))}
-  </ul>
+const devlog = (await getCollection('devlog', live)).sort(byDate);
+const tutorials = (await getCollection('tutorials', live)).sort(byDate);
+
+const latestDevlog = devlog[0];
+const recentDevlog = devlog.slice(1, 4);
+const featuredTutorials = tutorials.slice(0, 3);
+
+const pillars = [
+  { glyph: '🧗', title: 'Climb', body: 'Stamina-driven ledge climbing, vaults, and traversal — every surface is a route.' },
+  { glyph: '🗺️', title: 'Explore', body: 'Stitched-together biomes unlocked by collecting Rift Shards across the world.' },
+  { glyph: '👥', title: 'Co-op', body: 'Built multiplayer-first on Unreal Engine 5 + Lyra. Climb together or split up.' },
+];
+---
+<BaseLayout variant="flush">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Co-op · Climbing · Unreal Engine 5</p>
+      <h1 class="hero-title">CRITTER</h1>
+      <p class="hero-sub">{SITE_TAGLINE}</p>
+      <div class="hero-cta">
+        {STEAM_URL && <a class="btn btn-primary" href={STEAM_URL} target="_blank" rel="noopener">Wishlist on Steam</a>}
+        {DISCORD_URL && <a class="btn" href={DISCORD_URL} target="_blank" rel="noopener">Join the Discord</a>}
+        <a class="btn" href={`${base}/devlog`}>Read the devlog</a>
+      </div>
+      <!-- Swap this placeholder for a looping gameplay clip or trailer embed -->
+      <div class="hero-media">[ gameplay trailer — drop a video or looping clip here ]</div>
+    </div>
+  </section>
+
+  <!-- WHAT IS CRITTER -->
+  <section class="section">
+    <div class="section-head"><h2>What is Critter?</h2></div>
+    <p class="lead">
+      A small group climbs, scavenges, and survives across a fractured world — finding Rift
+      Shards, completing missions, and unlocking new biomes as they go. Built solo on UE5 + Lyra.
+    </p>
+    <div class="pillars" style="margin-top:1.6rem">
+      {pillars.map((p) => (
+        <div class="pillar">
+          <span class="glyph">{p.glyph}</span>
+          <h3>{p.title}</h3>
+          <p>{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- LATEST DEVLOG -->
+  {latestDevlog && (
+    <section class="section">
+      <div class="section-head">
+        <h2>Latest from the devlog</h2>
+        <a class="more" href={`${base}/devlog`}>All updates &rarr;</a>
+      </div>
+      <div class="card-grid">
+        <PostCard
+          feature
+          href={`${base}/devlog/${latestDevlog.slug}/`}
+          section="devlog"
+          title={latestDevlog.data.title}
+          description={latestDevlog.data.description}
+          pubDate={latestDevlog.data.pubDate}
+          cover={latestDevlog.data.cover}
+          coverAlt={latestDevlog.data.coverAlt}
+          tags={latestDevlog.data.tags}
+        />
+        {recentDevlog.map((post) => (
+          <PostCard
+            href={`${base}/devlog/${post.slug}/`}
+            section="devlog"
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            cover={post.data.cover}
+            coverAlt={post.data.coverAlt}
+            tags={post.data.tags}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- FEATURED TUTORIALS -->
+  {featuredTutorials.length > 0 && (
+    <section class="section" data-accent="biome">
+      <div class="section-head">
+        <h2>Developer tutorials</h2>
+        <a class="more" href={`${base}/tutorials`}>All tutorials &rarr;</a>
+      </div>
+      <p class="lead">Deep dives on how Critter is built — Lyra, GAS, materials, and engine tech, written for other UE devs.</p>
+      <div class="card-grid" style="margin-top:1.6rem">
+        {featuredTutorials.map((post) => (
+          <PostCard
+            href={`${base}/tutorials/${post.slug}/`}
+            section="tutorials"
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            cover={post.data.cover}
+            coverAlt={post.data.coverAlt}
+            tags={post.data.tags}
+            difficulty={post.data.difficulty}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA BAND -->
+  <section class="section">
+    <div class="cta-band">
+      <h2>Follow along</h2>
+      <p class="lead" style="margin:0 auto">New devlog every month, tutorials whenever something's worth sharing. No hype, no soon™ — just the work.</p>
+      <div class="hero-cta">
+        {DISCORD_URL && <a class="btn btn-primary" href={DISCORD_URL} target="_blank" rel="noopener">Join the Discord</a>}
+        {STEAM_URL && <a class="btn" href={STEAM_URL} target="_blank" rel="noopener">Wishlist on Steam</a>}
+      </div>
+    </div>
+  </section>
 </BaseLayout>

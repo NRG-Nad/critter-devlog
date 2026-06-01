@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { SECTIONS } from '../../consts';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const all = (await getCollection('tutorials', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// All tags, for the filter bar.
+const allTags = [...new Set(all.flatMap((p) => p.data.tags))].sort();
+
+// Group into named series (ordered by seriesOrder) vs standalone posts.
+const seriesMap = new Map<string, typeof all>();
+const standalone: typeof all = [];
+for (const post of all) {
+  const s = post.data.series;
+  if (s) {
+    if (!seriesMap.has(s)) seriesMap.set(s, []);
+    seriesMap.get(s)!.push(post);
+  } else {
+    standalone.push(post);
+  }
+}
+for (const [, posts] of seriesMap) {
+  posts.sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0));
+}
+
+const card = (post: (typeof all)[number]) => ({
+  href: `${base}/tutorials/${post.slug}/`,
+  title: post.data.title,
+  description: post.data.description,
+  pubDate: post.data.pubDate,
+  cover: post.data.cover,
+  coverAlt: post.data.coverAlt,
+  tags: post.data.tags,
+  difficulty: post.data.difficulty,
+});
+---
+<BaseLayout title="Tutorials" variant="wide" accent="biome">
+  <h1>Tutorials</h1>
+  <p class="tagline">{SECTIONS.tutorials.blurb}</p>
+
+  {all.length === 0 ? (
+    <p class="lead">No tutorials published yet — the first deep dive is in the works.</p>
+  ) : (
+    <>
+      {allTags.length > 0 && (
+        <div class="filterbar" id="filterbar">
+          <button data-tag="" aria-pressed="true">All</button>
+          {allTags.map((t) => <button data-tag={t}>{t}</button>)}
+        </div>
+      )}
+
+      {[...seriesMap.entries()].map(([series, posts]) => (
+        <div class="series-group" data-series>
+          <div class="series-head"><span class="badge">Series</span>{series}</div>
+          <div class="card-grid">
+            {posts.map((post) => (
+              <div class="card-wrap" data-tags={post.data.tags.join(',')}>
+                <PostCard section="tutorials" {...card(post)} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {standalone.length > 0 && (
+        <div class="series-group" data-series>
+          {seriesMap.size > 0 && <div class="series-head">Standalone guides</div>}
+          <div class="card-grid">
+            {standalone.map((post) => (
+              <div class="card-wrap" data-tags={post.data.tags.join(',')}>
+                <PostCard section="tutorials" {...card(post)} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  )}
+</BaseLayout>
+
+<script>
+  // Client-side tag filter. Toggles .card-wrap visibility, hides empty series groups.
+  const bar = document.getElementById('filterbar');
+  if (bar) {
+    const buttons = [...bar.querySelectorAll<HTMLButtonElement>('button')];
+    const wraps = [...document.querySelectorAll<HTMLElement>('.card-wrap')];
+    const groups = [...document.querySelectorAll<HTMLElement>('[data-series]')];
+    bar.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('button');
+      if (!btn) return;
+      const tag = btn.dataset.tag ?? '';
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      wraps.forEach((w) => {
+        const tags = (w.dataset.tags ?? '').split(',');
+        w.style.display = !tag || tags.includes(tag) ? '' : 'none';
+      });
+      groups.forEach((g) => {
+        const visible = [...g.querySelectorAll<HTMLElement>('.card-wrap')].some(
+          (w) => w.style.display !== 'none',
+        );
+        g.style.display = visible ? '' : 'none';
+      });
+    });
+  }
+</script>
