@@ -1,0 +1,25 @@
+{
+  "label": "Social",
+  "order": 6,
+  "kind": "system",
+  "features": [
+    {
+      "name": "Grouping",
+      "mechanics": [
+        { "priority": "TBD", "title": "LFG / Social Area", "description": "A way to team up with other people.", "type": "Social Interaction" }
+      ]
+    },
+    {
+      "name": "Hub Play",
+      "mechanics": [
+        { "priority": "TBD", "title": "Hub Minigame", "description": "Social minigame to play with others in the hub.", "type": "Social Interaction" }
+      ]
+    },
+    {
+      "name": "Mischief",
+      "mechanics": [
+        { "priority": "TBD", "title": "Push Player", "description": "Troll mechanic — shove another player.", "type": "Social Interaction" }
+      ]
+    }
+  ]
+}

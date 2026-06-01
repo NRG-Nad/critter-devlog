@@ -1,0 +1,42 @@
+{
+  "label": "Metagame & Progression",
+  "order": 5,
+  "kind": "system",
+  "features": [
+    {
+      "name": "Progression",
+      "mechanics": [
+        { "priority": "P0", "title": "Rift Shards", "description": "Primary progression currency. Earned from missions; spent to unlock new biomes.", "type": "Progression" },
+        { "priority": "P0", "title": "Biome Unlock Gate", "description": "Spends Rift Shards to unlock the next biome and progress the world.", "type": "Progression" },
+        { "priority": "P1", "title": "Storyline / Questline", "description": "Mission chain unlocking items/characters; gates new biomes; some missions need certain items.", "type": "Progression" },
+        { "priority": "P0", "title": "Achievements", "description": "Award players for certain feats in game.", "type": "Skill expression" }
+      ]
+    },
+    {
+      "name": "Identity",
+      "mechanics": [
+        { "priority": "P2", "title": "Cosmetics", "description": "Unlock new cosmetics.", "type": "Skill expression" }
+      ]
+    },
+    {
+      "name": "Persistence",
+      "mechanics": [
+        { "priority": "TBD", "title": "Death Markers / Ghost Trails", "description": "See where people died on mountains; leave warnings." },
+        { "priority": "TBD", "title": "Persistent Player Objects", "description": "Death Stranding-style bridges placed by players, shared across servers for a time." }
+      ]
+    },
+    {
+      "name": "Live Ops",
+      "mechanics": [
+        { "priority": "TBD", "title": "Procedural Weekly Mountain", "description": "Generate a new mountain / set of missions each week." }
+      ]
+    },
+    {
+      "name": "Discovery",
+      "mechanics": [
+        { "priority": "TBD", "title": "Hidden Secrets", "description": "Off the track: rare critters, sprays, emotes." },
+        { "priority": "TBD", "title": "Feed-to-Grow Hub Pet", "description": "Some weird thing in the hub you can feed for progress." }
+      ]
+    }
+  ]
+}

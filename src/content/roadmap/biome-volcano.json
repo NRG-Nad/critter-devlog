@@ -1,0 +1,38 @@
+{
+  "label": "Biome: Volcano",
+  "order": 12,
+  "kind": "content",
+  "features": [
+    {
+      "name": "Theme & Art",
+      "mechanics": [
+        { "priority": "TBD", "title": "Volcano Theme & Art", "description": "Hot, hostile, dramatic late-game biome.", "type": "Immersion" }
+      ]
+    },
+    {
+      "name": "Hazards",
+      "mechanics": [
+        { "priority": "TBD", "title": "Rising Lava Gauntlet", "description": "Instance of the Set-Pieces framework — climb ahead of rising lava." },
+        { "priority": "TBD", "title": "Heat Damage Volumes", "description": "Instances of Damage Volume tuned for fire." }
+      ]
+    },
+    {
+      "name": "Questline & Missions",
+      "mechanics": [
+        { "priority": "TBD", "title": "Volcano Questline", "description": "Late-game missions themed to the volcano." }
+      ]
+    },
+    {
+      "name": "Unlock & Rewards",
+      "mechanics": [
+        { "priority": "TBD", "title": "Rift-Shard Gate + Payout", "description": "High Rift-Shard cost to unlock; top-tier rewards." }
+      ]
+    },
+    {
+      "name": "Required Gear",
+      "mechanics": [
+        { "priority": "TBD", "title": "Fire-Resist Gear", "description": "Shop gear required for the lava biome." }
+      ]
+    }
+  ]
+}

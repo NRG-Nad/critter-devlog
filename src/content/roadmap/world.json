@@ -1,0 +1,32 @@
+{
+  "label": "World & Hub",
+  "order": 7,
+  "kind": "system",
+  "features": [
+    {
+      "name": "Hub",
+      "mechanics": [
+        { "priority": "P0", "title": "Hub World", "description": "Spawn point. Has portals to other biomes.", "type": "Core mechanic" }
+      ]
+    },
+    {
+      "name": "Travel",
+      "mechanics": [
+        { "priority": "P0", "title": "Portals / Summoning Stone", "description": "Portal from hub to biome. Temporary waypoints unlock with progress. 1hr-cooldown hearthstone." },
+        { "priority": "TBD", "title": "Trains", "description": "Goes between biomes.", "type": "Social Interaction" }
+      ]
+    },
+    {
+      "name": "Biome Framework",
+      "mechanics": [
+        { "priority": "P0", "title": "Biome Template & Unlock Plumbing", "description": "Reusable structure every biome fills: theme, hazards, questline, gear, Rift-Shard gate.", "type": "Core mechanic" }
+      ]
+    },
+    {
+      "name": "Ambience & Music",
+      "mechanics": [
+        { "priority": "P1", "title": "Biome Music / Ambience", "description": "Per-biome music and ambient soundscape.", "type": "Immersion" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "label": "Modes & Missions",
+  "order": 4,
+  "kind": "system",
+  "features": [
+    {
+      "name": "Core Loop",
+      "mechanics": [
+        { "priority": "P0", "title": "Ascend the Peak", "description": "The party gathers at the foot of the mountain and must reach the top to activate the objective.", "type": "Core mechanic" }
+      ]
+    },
+    {
+      "name": "Mission System",
+      "mechanics": [
+        { "priority": "P0", "title": "Mission Definitions", "description": "Categories: Story, Tutorial, Optional, Daily, Secret. Earn Rift Shards on completion.", "type": "Core mechanic" },
+        { "priority": "P1", "title": "Mission Discovery", "description": "Missions are found by exploring zones, not just listed — supports the exploration-first pillar.", "type": "Progression" },
+        { "priority": "P1", "title": "Co-op Mission Sync", "description": "Shared mission state across the party. Open: real-time vs at-completion; who is authority.", "type": "Social Interaction" }
+      ]
+    },
+    {
+      "name": "Mission Types",
+      "mechanics": [
+        { "priority": "TBD", "title": "Race", "description": "Timed ascent against others." },
+        { "priority": "TBD", "title": "Collect Resources", "description": "Gather objectives scattered across a zone." },
+        { "priority": "TBD", "title": "Rescue Stranded Critter", "description": "Find a stranded critter before he dies." }
+      ]
+    },
+    {
+      "name": "Selection",
+      "mechanics": [
+        { "priority": "P1", "title": "Mission Board", "description": "Pick a mission to start with your party. NOTE: tension with the exploration-first pillar — decide board vs in-world discovery vs both." }
+      ]
+    },
+    {
+      "name": "Rulesets",
+      "mechanics": [
+        { "priority": "P1", "title": "PvE / PvP Zones", "description": "Hub disables trolling. Starter biome is PvE; others are PvP." },
+        { "priority": "TBD", "title": "Daily Challenge Modifiers", "description": "Randomly generated mountain with modifiers (low gravity, slow regen, etc.)." }
+      ]
+    },
+    {
+      "name": "Challenges",
+      "mechanics": [
+        { "priority": "P1", "title": "Interaction Puzzle", "description": "Place an orb on a pedestal to extend a bridge / open a door." },
+        { "priority": "P2", "title": "Co-op Challenge", "description": "A challenge players must work together to solve.", "type": "Social Interaction" }
+      ]
+    },
+    {
+      "name": "Onboarding",
+      "mechanics": [
+        { "priority": "P0", "title": "Climbing Gym / Tutorial", "description": "Basic climbing challenges over climbable/walkable surfaces — the FTUE.", "type": "Core mechanic" }
+      ]
+    }
+  ]
+}

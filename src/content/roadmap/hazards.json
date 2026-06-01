@@ -1,0 +1,38 @@
+{
+  "label": "Hazards",
+  "order": 3,
+  "kind": "system",
+  "features": [
+    {
+      "name": "Damage Primitives",
+      "mechanics": [
+        { "priority": "P0", "title": "Damage Surface", "description": "Generic surface that damages you each time you touch it.", "type": "Core mechanic" },
+        { "priority": "P0", "title": "Damage Volume", "description": "Poison/heat cloud that damages you on tick.", "type": "Core mechanic" }
+      ]
+    },
+    {
+      "name": "Telegraphed Hazards",
+      "mechanics": [
+        { "priority": "P1", "title": "Falling-Rock Markers", "description": "A red marker fills the impact area before rocks land.", "type": "Skill expression" }
+      ]
+    },
+    {
+      "name": "Weather",
+      "mechanics": [
+        { "priority": "P2", "title": "Ice Storm System", "description": "Periodically applies frost damage while active; you can take cover. (Instanced by Glacier.)", "type": "Skill expression" }
+      ]
+    },
+    {
+      "name": "Hostiles",
+      "mechanics": [
+        { "priority": "TBD", "title": "Hostile NPCs", "description": "Ghosts, angry boars, etc." }
+      ]
+    },
+    {
+      "name": "Set-Pieces",
+      "mechanics": [
+        { "priority": "TBD", "title": "Environmental Hazard Framework", "description": "Base system for big biome set-pieces — avalanches, rising lava, typhoons. (Instanced per biome.)" }
+      ]
+    }
+  ]
+}

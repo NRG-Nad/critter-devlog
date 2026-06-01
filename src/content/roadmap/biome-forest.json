@@ -1,0 +1,38 @@
+{
+  "label": "Biome: Forest (Grasslands)",
+  "order": 10,
+  "kind": "content",
+  "features": [
+    {
+      "name": "Theme & Art",
+      "mechanics": [
+        { "priority": "P0", "title": "Grasslands Theme & Art", "description": "First biome — whimsical, gentle, readable. Sets the visual baseline.", "type": "Immersion" }
+      ]
+    },
+    {
+      "name": "Hazards",
+      "mechanics": [
+        { "priority": "P1", "title": "Intro Hazards", "description": "Gentle instances of Damage Surface / Volume to teach the hazard language." }
+      ]
+    },
+    {
+      "name": "Questline & Missions",
+      "mechanics": [
+        { "priority": "P0", "title": "Grasslands Questline", "description": "Intro/tutorial story missions; simple missions available from the start." }
+      ]
+    },
+    {
+      "name": "Unlock & Rewards",
+      "mechanics": [
+        { "priority": "P0", "title": "Starter Biome (free)", "description": "No Rift-Shard gate — the on-ramp into the loop." },
+        { "priority": "P1", "title": "Rift Shard Payout", "description": "Mission rewards that fund the first biome unlock." }
+      ]
+    },
+    {
+      "name": "Required Gear",
+      "mechanics": [
+        { "priority": "P1", "title": "Starter Kit", "description": "Baseline items available to everyone." }
+      ]
+    }
+  ]
+}

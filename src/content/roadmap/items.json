@@ -1,0 +1,55 @@
+{
+  "label": "Items & Inventory",
+  "order": 2,
+  "kind": "system",
+  "features": [
+    {
+      "name": "Inventory Core",
+      "mechanics": [
+        { "priority": "P0", "title": "Item + Inventory System", "description": "Pick up / drop a generic item in the world and store it in your inventory.", "type": "Core mechanic" },
+        { "priority": "P2", "title": "BAG (Container Item)", "description": "Special item you can drop/pick up which stores other items.", "type": "Skill expression" }
+      ]
+    },
+    {
+      "name": "Climbing Gadgets",
+      "mechanics": [
+        { "priority": "P1", "title": "Rope", "description": "Can be extended to climb up.", "type": "Skill expression" },
+        { "priority": "P1", "title": "Piton", "description": "Placed in a wall to hang on.", "type": "Skill expression" }
+      ]
+    },
+    {
+      "name": "Consumables",
+      "mechanics": [
+        { "priority": "P0", "title": "Healing Item", "description": "Basic consumable used to heal a debuff (injury, hunger).", "type": "Core mechanic" }
+      ]
+    },
+    {
+      "name": "Loot",
+      "mechanics": [
+        { "priority": "P2", "title": "Crates / RNG Containers", "description": "Crack them open to spawn random items.", "type": "Skill expression" }
+      ]
+    },
+    {
+      "name": "Economy & Shops",
+      "mechanics": [
+        { "priority": "P1", "title": "Veins (Jewel source)", "description": "Mine them for Jewels — the shop purchase currency.", "type": "Progression" },
+        { "priority": "P1", "title": "Shop", "description": "Spend Jewels on items and consumables; inventory unlocks as you complete missions." },
+        { "priority": "TBD", "title": "Shopkeeper", "description": "You can steal from him — if you do, he chases you." }
+      ]
+    },
+    {
+      "name": "Signaling Gadgets",
+      "mechanics": [
+        { "priority": "TBD", "title": "SOS Beacon", "description": "Signal other players you are stuck; they can take a mission to save you." },
+        { "priority": "TBD", "title": "Megaphone / Flare", "description": "Long-range signal / comms gadget." },
+        { "priority": "TBD", "title": "Bouncy Castle", "description": "Deployable fun/utility item." }
+      ]
+    },
+    {
+      "name": "Polish",
+      "mechanics": [
+        { "priority": "P2", "title": "Item Art", "description": "Final visuals, animations, and balancing for all items.", "type": "Immersion" }
+      ]
+    }
+  ]
+}

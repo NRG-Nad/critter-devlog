@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { CATEGORIES } from '../data/categories';
+import { PRIORITY_OPTIONS, TYPE_OPTIONS, KIND_OPTIONS } from '../data/roadmap-board';
 
 // Category enum derived from the taxonomy — single source of truth in data/categories.ts.
 const categoryIds = Object.keys(CATEGORIES) as [string, ...string[]];
@@ -43,18 +44,33 @@ const tutorials = defineCollection({
     }),
 });
 
-// Roadmap / progress tracker. One entry per core feature, with a status that
-// moves planned → in-progress → shipped over time.
+// Roadmap board — one document per column (category). Hierarchy:
+// Column → Feature → Mechanic (prioritized). Powers /roadmap; Tina-editable.
+// This collection replaced the old markdown progress-tracker entries.
 const roadmap = defineCollection({
-  type: 'content',
+  type: 'data',
   schema: () =>
     z.object({
-      title: z.string(),
-      status: z.enum(['planned', 'in-progress', 'shipped']).default('planned'),
-      area: z.string(), // e.g. "Climbing", "Progression", "Online"
-      date: z.coerce.date().optional(), // shipped date, or target
-      order: z.number().default(0),
-      draft: z.boolean().default(false),
+      label: z.string(), // column / category name
+      order: z.number().default(0), // left → right column order
+      kind: z.enum(KIND_OPTIONS as [string, ...string[]]).default('system'), // system | content
+      features: z
+        .array(
+          z.object({
+            name: z.string(),
+            mechanics: z
+              .array(
+                z.object({
+                  priority: z.enum(PRIORITY_OPTIONS as [string, ...string[]]),
+                  title: z.string(),
+                  description: z.string().optional(),
+                  type: z.enum(TYPE_OPTIONS as [string, ...string[]]).optional(),
+                }),
+              )
+              .default([]),
+          }),
+        )
+        .default([]),
     }),
 });
 

@@ -1,0 +1,64 @@
+{
+  "label": "Character",
+  "order": 1,
+  "kind": "system",
+  "features": [
+    {
+      "name": "Climbing",
+      "mechanics": [
+        { "priority": "P0", "title": "Basic Climbing", "description": "Grab onto designated wall surfaces, mantle up, etc.", "type": "Core mechanic" },
+        { "priority": "P0", "title": "Leap to Adjacent Wall", "description": "Jump from a climbing surface to a nearby one.", "type": "Core mechanic" },
+        { "priority": "P1", "title": "Helping Hand", "description": "Extend a hand to pull a friend up.", "type": "Core mechanic" },
+        { "priority": "TBD", "title": "Double-Tap 180", "description": "Quickly turn around while climbing by double-tapping backwards." }
+      ]
+    },
+    {
+      "name": "Movement",
+      "mechanics": [
+        { "priority": "P1", "title": "GREAT Movement", "description": "Iterate until the character feels fun to control in a greybox.", "type": "Immersion" },
+        { "priority": "TBD", "title": "Crouch, Push / Pull", "description": "Useful for puzzles, challenges, and general agency.", "type": "Core mechanic" }
+      ]
+    },
+    {
+      "name": "Stamina",
+      "mechanics": [
+        { "priority": "P0", "title": "Stamina System", "description": "Limits climbing duration, adds challenge.", "type": "Core mechanic" },
+        { "priority": "TBD", "title": "Stamina Burn", "description": "Exceed max stamina — but doing so deals permanent damage." }
+      ]
+    },
+    {
+      "name": "Feedback & Juice",
+      "mechanics": [
+        { "priority": "P1", "title": "Fall-Damage Telegraph", "description": "Project where they will fall and play SFX/VFX to telegraph the damage." },
+        { "priority": "P1", "title": "Climbing Art / Effects", "description": "Juiced animations and sound effects for basic climbing." }
+      ]
+    },
+    {
+      "name": "Camera",
+      "mechanics": [
+        { "priority": "P0", "title": "Climbing Camera", "description": "Camera framing that reads walls and holds well during climbs.", "type": "Core mechanic" },
+        { "priority": "TBD", "title": "Photo Mode", "description": "Pause and frame a shot of your climb." }
+      ]
+    },
+    {
+      "name": "Expression",
+      "mechanics": [
+        { "priority": "TBD", "title": "Animated Faces", "description": "Mouth/expression changes with voice input and world feedback.", "type": "Comedy" },
+        { "priority": "TBD", "title": "Racials", "description": "Passive/active ability per animal race (Dog Howl: stamina boost; Cat Claws: slower stamina drain on a wall).", "type": "Skill expression" },
+        { "priority": "TBD", "title": "Ghost Mode", "description": "When dead and waiting for resurrection, spectate, speak to teammates, or troll.", "type": "Comedy" }
+      ]
+    },
+    {
+      "name": "Comms",
+      "mechanics": [
+        { "priority": "P1", "title": "Proximity Voice Chat", "description": "Spatialised voice; drives Animated Faces and co-op coordination.", "type": "Social Interaction" }
+      ]
+    },
+    {
+      "name": "Interaction",
+      "mechanics": [
+        { "priority": "P0", "title": "Interaction System", "description": "Interact with objects that can't be picked up (pull a lever, open a door).", "type": "Core mechanic" }
+      ]
+    }
+  ]
+}

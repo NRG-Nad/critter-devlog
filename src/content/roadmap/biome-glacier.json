@@ -1,0 +1,38 @@
+{
+  "label": "Biome: Glacier",
+  "order": 11,
+  "kind": "content",
+  "features": [
+    {
+      "name": "Theme & Art",
+      "mechanics": [
+        { "priority": "P1", "title": "Glacier Theme & Art", "description": "Cold, high-altitude, crystalline biome.", "type": "Immersion" }
+      ]
+    },
+    {
+      "name": "Hazards",
+      "mechanics": [
+        { "priority": "P2", "title": "Ice Storm", "description": "Instance of the Weather system — periodic frost damage; take cover." },
+        { "priority": "TBD", "title": "Slippery Surfaces", "description": "Reduced grip / sliding on ice." }
+      ]
+    },
+    {
+      "name": "Questline & Missions",
+      "mechanics": [
+        { "priority": "TBD", "title": "Glacier Questline", "description": "Mid-game missions themed to the glacier." }
+      ]
+    },
+    {
+      "name": "Unlock & Rewards",
+      "mechanics": [
+        { "priority": "TBD", "title": "Rift-Shard Gate + Payout", "description": "Costs Rift Shards to unlock; pays out more on completion." }
+      ]
+    },
+    {
+      "name": "Required Gear",
+      "mechanics": [
+        { "priority": "TBD", "title": "Frost-Resist Gear", "description": "Shop gear needed to survive the cold." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "label": "Multiplayer & Tech",
+  "order": 8,
+  "kind": "system",
+  "features": [
+    {
+      "name": "Sessions & Party",
+      "mechanics": [
+        { "priority": "P0", "title": "EOS / Redpoint Sessions", "description": "Create/join online sessions via the Redpoint EOS integration.", "type": "Core mechanic" },
+        { "priority": "P0", "title": "Invites & Party", "description": "Form a party, invite friends, travel together." }
+      ]
+    },
+    {
+      "name": "Replication",
+      "mechanics": [
+        { "priority": "P0", "title": "Climbing & Helping-Hand Sync", "description": "Replicate climbing state and co-op assists cleanly across clients.", "type": "Core mechanic" },
+        { "priority": "P0", "title": "Item Pickup Authority", "description": "Server-authoritative pickup/drop so two players can't grab the same item." },
+        { "priority": "P0", "title": "Attribute / GE Replication Hardening", "description": "Guard against the attribute-set vs gameplay-effect removal race on pawn swap (the recent crash)." }
+      ]
+    },
+    {
+      "name": "Server Model",
+      "mechanics": [
+        { "priority": "P1", "title": "Listen vs Dedicated", "description": "Decide and support the hosting model(s); all code works standalone, listen, and dedicated." },
+        { "priority": "P1", "title": "Host Migration", "description": "Keep a session alive when the listen-server host leaves." }
+      ]
+    },
+    {
+      "name": "Save & Persistence",
+      "mechanics": [
+        { "priority": "P1", "title": "CritterSaveGame", "description": "Persist Rift Shards, unlocks, cosmetics, and progression between sessions." }
+      ]
+    },
+    {
+      "name": "Movement Tech",
+      "mechanics": [
+        { "priority": "P1", "title": "Mover Migration (CMC → Mover)", "description": "Move climbing/movement off Character Movement Component onto the Mover plugin.", "type": "Core mechanic" }
+      ]
+    },
+    {
+      "name": "Integrity",
+      "mechanics": [
+        { "priority": "P2", "title": "PvP Anti-Grief", "description": "Protect PvP zones from exploit-grief; gate trolling mechanics correctly." }
+      ]
+    }
+  ]
+}

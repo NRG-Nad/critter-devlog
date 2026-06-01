@@ -37,33 +37,82 @@ export default defineConfig({
       buildCollection('devlog', 'Devlog', 'src/content/devlog', { category: true }),
       buildCollection('tutorials', 'Tutorials', 'src/content/tutorials', { tutorial: true }),
       {
+        // Roadmap board — one document per column (category). Hierarchy:
+        // Column → Feature → Mechanic. Powers /roadmap; replaced the old md tracker.
         name: 'roadmap',
         label: 'Roadmap',
         path: 'src/content/roadmap',
-        format: 'md',
-        ui: {
-          filename: {
-            slugify: (values) =>
-              ((values?.title as string) || 'feature')
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, ''),
-          },
-        },
+        format: 'json',
         fields: [
-          { type: 'string', name: 'title', label: 'Feature', isTitle: true, required: true },
+          { type: 'string', name: 'label', label: 'Column / Category', isTitle: true, required: true },
+          { type: 'number', name: 'order', label: 'Column order (left → right)' },
           {
             type: 'string',
-            name: 'status',
-            label: 'Status',
-            options: ['planned', 'in-progress', 'shipped'],
-            required: true,
+            name: 'kind',
+            label: 'Kind',
+            description: 'System = reusable mechanics · Content = a biome that consumes systems.',
+            options: [
+              { value: 'system', label: 'System' },
+              { value: 'content', label: 'Content (biome)' },
+            ],
           },
-          { type: 'string', name: 'area', label: 'Area', description: 'e.g. Climbing, Progression, Online', required: true },
-          { type: 'datetime', name: 'date', label: 'Date', description: 'Shipped date, or target.', ui: { dateFormat: 'YYYY-MM-DD' } },
-          { type: 'number', name: 'order', label: 'Sort order (lower = first)' },
-          { type: 'boolean', name: 'draft', label: 'Draft' },
-          { type: 'rich-text', name: 'body', label: 'Description', isBody: true, parser: { type: 'markdown' } },
+          {
+            type: 'object',
+            name: 'features',
+            label: 'Features',
+            list: true,
+            ui: {
+              itemProps: (feature) => ({
+                label: `${feature?.name || 'New feature'}${feature?.mechanics?.length ? ` (${feature.mechanics.length})` : ''}`,
+              }),
+              defaultItem: () => ({ name: 'New feature', mechanics: [] }),
+            },
+            fields: [
+              { type: 'string', name: 'name', label: 'Feature name', isTitle: true, required: true },
+              {
+                type: 'object',
+                name: 'mechanics',
+                label: 'Mechanics',
+                list: true,
+                ui: {
+                  itemProps: (m) => ({
+                    label: `${m?.priority ? `[${m.priority}] ` : ''}${m?.title || 'New mechanic'}`,
+                  }),
+                  defaultItem: () => ({ priority: 'TBD', title: 'New mechanic' }),
+                },
+                fields: [
+                  {
+                    type: 'string',
+                    name: 'priority',
+                    label: 'Priority',
+                    description: 'P0 must-have · P1 really want · P2 nice-to-have · TBD icebox',
+                    required: true,
+                    options: [
+                      { value: 'P0', label: 'P0 · Must-have' },
+                      { value: 'P1', label: 'P1 · Really want' },
+                      { value: 'P2', label: 'P2 · Nice-to-have' },
+                      { value: 'TBD', label: 'TBD · Icebox' },
+                    ],
+                  },
+                  { type: 'string', name: 'title', label: 'Title', required: true },
+                  { type: 'string', name: 'description', label: 'Description', ui: { component: 'textarea' } },
+                  {
+                    type: 'string',
+                    name: 'type',
+                    label: 'Type (optional)',
+                    options: [
+                      'Core mechanic',
+                      'Skill expression',
+                      'Progression',
+                      'Immersion',
+                      'Comedy',
+                      'Social Interaction',
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
     ],

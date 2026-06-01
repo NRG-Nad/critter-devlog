@@ -1,0 +1,35 @@
+{
+  "label": "UI & HUD",
+  "order": 9,
+  "kind": "system",
+  "features": [
+    {
+      "name": "HUD",
+      "mechanics": [
+        { "priority": "P0", "title": "Stamina / Health HUD", "description": "Core in-world readouts for stamina and health/debuffs." },
+        { "priority": "P1", "title": "Currency Display", "description": "Show Rift Shards and Jewels." }
+      ]
+    },
+    {
+      "name": "Menus",
+      "mechanics": [
+        { "priority": "P0", "title": "Inventory Screen", "description": "View/manage carried items and the BAG." },
+        { "priority": "P1", "title": "Shop Screen", "description": "Browse and buy with Jewels." }
+      ]
+    },
+    {
+      "name": "Mission UI",
+      "mechanics": [
+        { "priority": "P1", "title": "Mission Board UI", "description": "Presentation layer for selecting/tracking missions." },
+        { "priority": "P1", "title": "World Markers / Waypoints", "description": "Diegetic markers for objectives, portals, and discovered missions." },
+        { "priority": "TBD", "title": "Post-Mission Summary", "description": "Review the route you climbed and rewards earned." }
+      ]
+    },
+    {
+      "name": "Social UI",
+      "mechanics": [
+        { "priority": "TBD", "title": "Party Frames / LFG Screen", "description": "Party roster, status, and group-finding UI." }
+      ]
+    }
+  ]
+}
