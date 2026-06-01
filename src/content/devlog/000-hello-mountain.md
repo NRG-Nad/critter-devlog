@@ -4,6 +4,7 @@ description: Kicking off the Critter devlog — what this co-op climbing game is
 category: milestone
 pubDate: 2026-05-31T00:00:00.000Z
 featured: true
+draft: false
 tags:
   - intro
   - co-op
