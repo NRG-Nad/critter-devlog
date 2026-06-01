@@ -1,14 +1,15 @@
 ---
-title: "A Glowing Rift Shard Material in 20 Minutes"
-description: "A cheap, animated crystalline material using Fresnel, panning noise, and emissive — no textures required."
-pubDate: 2026-06-08
-difficulty: beginner
-engineVersion: "UE 5.7"
-tags: ["materials", "vfx", "shaders"]
+title: A Glowing Rift Shard Material in 20 Minutes
+description: 'A cheap, animated crystalline material using Fresnel, panning noise, and emissive — no textures required.'
+pubDate: 2026-06-08T00:00:00.000Z
+tags:
+  - materials
+  - vfx
+  - shaders
 draft: true
+difficulty: beginner
+engineVersion: UE 5.7
 ---
-
-> **EXAMPLE TEMPLATE.** A standalone tutorial (no series). Replace or delete.
 
 Rift Shards needed to read as "valuable and otherworldly" from across a biome,
 without a texture budget. The whole look is three nodes stacked into emissive:
